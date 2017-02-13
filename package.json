@@ -1,0 +1,19 @@
+{
+  "name": "chart-stock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.1",
+    "request": "^2.79.0"
+  }
+}
