@@ -1,9 +1,35 @@
 $(function() {
-    names = []
-    $('h3').each(function() {
-        names.push($(this).html())
-    })
+    var names = getNames()
     makeChart(names)
+
+    var socket = io()
+
+    $('.remove').on('click', function() {
+        var element = $(this).attr('id')
+        socket.emit('remove symbol', element)
+        $('.' + symbol).remove()
+        names = getNames()
+        makeChart(names)
+    })
+
+    $('form').submit(function() {
+        
+    })
+
+    socket.on('add symbol', function(data) {
+        console.log('got emit from server');
+        var symbol = data.symbol
+        var name = data.name
+        $($('.col-sm-6.col-md-4').last()).append('<div class="thumbnail ' + symbol + '"><div class="caption"><h3>' + symbol + '</h3><p>' + name + '</p><p><a href="#" id="' + symbol + '" class="btn btn-danger remove" role="button">Remove</a></p></div></div>')
+        names = getNames()
+        makeChart(names)
+    })
+
+    socket.on('remove symbol', function(symbol) {
+        $('.' + symbol).remove()
+        names = getNames()
+        makeChart(names)
+    })
 })
 
 function makeChart(names) {
@@ -12,6 +38,7 @@ function makeChart(names) {
 
     $.each(names, function (i, name) {
         $.getJSON('/api/stocks/' + name, function (data) {
+
             console.log(typeof data);
 
             var newData = []
@@ -35,10 +62,6 @@ function makeChart(names) {
     });
 }
 
-/**
- * Create the chart when all data is loaded
- * @returns {undefined}
- */
 function createChart(seriesOptions) {
 
     Highcharts.stockChart('container', {
@@ -81,4 +104,12 @@ function createChart(seriesOptions) {
 
         series: seriesOptions
     });
+}
+
+function getNames() {
+    names = []
+    $('h3').each(function() {
+        names.push($(this).html())
+    })
+    return names
 }
