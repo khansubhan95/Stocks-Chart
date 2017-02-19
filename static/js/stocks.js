@@ -13,7 +13,7 @@ $(function() {
     })
 
     $('form').submit(function() {
-        
+
     })
 
     socket.on('add symbol', function(data) {
@@ -108,8 +108,10 @@ function createChart(seriesOptions) {
 
 function getNames() {
     names = []
-    $('h3').each(function() {
-        names.push($(this).html())
-    })
+    if ($('h3').length) {
+        $('h3').each(function() {
+            names.push($(this).html())
+        })
+    }
     return names
 }
