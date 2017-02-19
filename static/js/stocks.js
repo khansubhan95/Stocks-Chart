@@ -7,7 +7,7 @@ $(function() {
     $('.remove').on('click', function() {
         var element = $(this).attr('id')
         socket.emit('remove symbol', element)
-        $('.' + symbol).remove()
+        $('.' + element).remove()
         names = getNames()
         makeChart(names)
     })
