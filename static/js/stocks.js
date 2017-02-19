@@ -65,6 +65,12 @@ function makeChart(names) {
 
 function createChart(seriesOptions) {
 
+    Highcharts.setOptions({
+        lang: {
+            noData: "No data to display"
+        }
+    })
+
     Highcharts.stockChart('container', {
 
         rangeSelector: {
