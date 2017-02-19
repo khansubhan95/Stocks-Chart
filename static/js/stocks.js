@@ -9,7 +9,7 @@ $(function() {
     $('.remove').on('click', function() {
         var element = $(this).attr('id')
         socket.emit('remove symbol', element)
-        $('.' + element).remove()
+        $('div.' + element).parent().remove()
         names = getNames()
         console.log('names ' + names);
         makeChart(names)
@@ -29,7 +29,7 @@ $(function() {
     })
 
     socket.on('remove symbol', function(symbol) {
-        $('.' + symbol).remove()
+        $('div.' + symbol).parent().remove()
         names = getNames()
         makeChart(names)
     })
