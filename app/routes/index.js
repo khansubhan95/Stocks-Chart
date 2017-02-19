@@ -10,18 +10,45 @@ var urlencodedParser = bodyParser.urlencoded({extended:false})
 
 module.exports = function(app) {
 	app.get('/', function(req, res) {
-		res.sendFile(path.join(__dirname, '../../public', 'index.html'))
+		Company.find({}, function(err, doc) {
+			if (err) console.log(err);
+
+			if(doc) {
+				var data = doc
+				res.render('list', {'data': data})
+			}
+
+			else {
+				res.render('list')
+			}
+		})
+	})
+
+	app.get('/api/stocks/:name', function(req, res) {
+		var dateRaw = new Date()
+	    var date = (dateRaw.getUTCFullYear()-1).toString() + '-' + dateFormat(dateRaw.getMonth()+1) + '-' + dateFormat(dateRaw.getMonth())
+
+	    var name = req.params.name
+
+	    var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + name.toString() + '.json?column_index=1&start_date=' + date + '&api_key=JaJF5_8_KE2R6XNom8ux'
+
+	    request.get(APIEndPoint, function(err, response, body) {
+	    	if (!err && response.statusCode===200) {
+	    		body = JSON.parse(body)
+	    		res.send(body)
+	    	}
+	    	else
+	    		res.redirect('/')
+	    })
 	})
 
 	app.post('/', urlencodedParser, function(req, res) {
 		var symbol = req.body.symbol.toUpperCase()
-		console.log(symbol);
 
 		var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?api_key=' + process.env.QUANDL_KEY
 		request.get(APIEndPoint, function(err, response, body) {
 			if (!err && response.statusCode===200) {
 				body = JSON.parse(body)
-				console.log(typeof body);
 				Company.findOne({symbol: symbol}, function(err, doc) {
 					if (err) console.log(err);
 
@@ -32,15 +59,8 @@ module.exports = function(app) {
 
 						newCompany.id = body.dataset.id
 						newCompany.symbol = body.dataset.dataset_code
-						newCompany.name = body.dataset.name
-						newCompany.start_date = body.dataset.start_date
-						newCompany.end_date = body.dataset.end_date
-						newCompany.stocks = []
-						for (var i = 0; i < body.dataset.data.length; i++) {
-							newCompany.stocks.push([body.dataset.data[i][0], body.dataset.data[i][1]])
-						}
+						newCompany.name = body.dataset.name.split('Prices')[0]
 
-						console.log(typeof newCompany);
 						newCompany.save(function(err, doc) {
 							if (err) console.log(err);
 							res.redirect('/')
@@ -53,4 +73,8 @@ module.exports = function(app) {
 		})
 		
 	})
+}
+
+function dateFormat(num) {
+    return num.toString().length<2?'0'+num:num
 }
