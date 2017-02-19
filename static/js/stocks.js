@@ -1,6 +1,8 @@
 $(function() {
+
     var names = getNames()
     makeChart(names)
+
 
     var socket = io()
 
@@ -65,12 +67,6 @@ function makeChart(names) {
 
 function createChart(seriesOptions) {
 
-    Highcharts.setOptions({
-        lang: {
-            noData: "No data to display"
-        }
-    })
-
     Highcharts.stockChart('container', {
 
         rangeSelector: {
@@ -102,6 +98,14 @@ function createChart(seriesOptions) {
         },
 
         useHighStocks: true,
+
+        noData: {
+            style: {
+                fontSize: '14px',
+                color: '#56565E',
+                zIndex: 25
+            }
+        },
 
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
