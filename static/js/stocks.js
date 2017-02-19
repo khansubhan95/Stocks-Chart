@@ -23,7 +23,7 @@ $(function() {
         console.log('got emit from server');
         var symbol = data.symbol
         var name = data.name
-        $($('.col-sm-6.col-md-4').last()).append('<div class="thumbnail ' + symbol + '"><div class="caption"><h3>' + symbol + '</h3><p>' + name + '</p><p><a href="#" id="' + symbol + '" class="btn btn-danger remove" role="button">Remove</a></p></div></div>')
+        $('#add').after('<div class="thumbnail ' + symbol + '"><div class="caption"><h3>' + symbol + '</h3><p>' + name + '</p><p><a href="#" id="' + symbol + '" class="btn btn-danger remove" role="button">Remove</a></p></div></div>')
         names = getNames()
         makeChart(names)
     })
