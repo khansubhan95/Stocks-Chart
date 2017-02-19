@@ -9,6 +9,7 @@ $(function() {
         socket.emit('remove symbol', element)
         $('.' + element).remove()
         names = getNames()
+        console.log('names ' + names);
         makeChart(names)
     })
 
