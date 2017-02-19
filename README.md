@@ -39,7 +39,7 @@ This application was deployed on gomix. To deploy, create a GitHub repository, p
 
 
 ##Builtwith
-1. [socket.io](socket.io)      
+1. [socket.io](http://socket.io)      
 2. [Quandl](https://www.quandl.com/)
 3. [Highstock](http://mongoosejs.com/)
 4. [ejs](www.embeddedjs.com/)
@@ -52,6 +52,3 @@ View other dependencies in package.json
 3. Commit your changes
 4. Push to branch
 5. Submit a pull request
-
-##Licensing
-MIT
