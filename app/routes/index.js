@@ -65,8 +65,7 @@ module.exports = function(app, io) {
 							if (err) console.log(err);
 							io.emit('add symbol', {'symbol': symbol, 'name': temp})
 							console.log('server emitted');
-							res.status(200)
-							res.send({})
+							res.redirect('/')
 						})
 					}
 				})
