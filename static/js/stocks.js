@@ -49,7 +49,7 @@ function makeChart(names) {
 
     $.each(names, function (i, name) {
         $.getJSON('/api/stocks/' + name, function (data) {
-
+ 
             var newData = []
             var tempData = data.dataset.data.reverse()
             tempData.forEach(function(arr) {
@@ -132,3 +132,4 @@ function getNames() {
     }
     return names
 }
+
