@@ -32,27 +32,38 @@ module.exports = function(app, io) {
 
 	    var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + name.toString() + '.json?column_index=1&start_date=' + date + '&api_key=JaJF5_8_KE2R6XNom8ux'
 
-	    request.get(APIEndPoint, function(err, response, body) {
-	    	if (!err && response.statusCode===200) {
-	    		body = JSON.parse(body)
-	    		res.send(body)
-	    	}
-	    	else
-	    		res.redirect('/')
+	    // request.get(APIEndPoint, function(err, response, body) {
+	    // 	if (!err && response.statusCode===200) {
+	    // 		body = JSON.parse(body)
+	    // 		res.send(body)
+	    // 	}
+	    // 	else
+	    // 		res.redirect('/')
+	    // })
+	    
+	    Company.findOne({'symbol': name}, function(err, doc) {
+	    	if (err) console.log(err);
+	    	// console.log(doc.dataset.id);
+	    	res.send(doc)
 	    })
 	})
 
 	app.post('/', urlencodedParser, function(req, res) {
 		var symbol = req.body.symbol.toUpperCase()
 
-		var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?api_key=' + process.env.QUANDL_KEY
+		// var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?api_key=' + process.env.QUANDL_KEY
+		
+		var dateRaw = new Date()
+	    var date = (dateRaw.getUTCFullYear()-1).toString() + '-' + dateFormat(dateRaw.getMonth()+1) + '-' + dateFormat(dateRaw.getMonth())
+	    var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?column_index=1&start_date=' + date + '&api_key=JaJF5_8_KE2R6XNom8ux'
+
 		request.get(APIEndPoint, function(err, response, body) {
 			if (!err && response.statusCode===200) {
 				body = JSON.parse(body)
 				Company.findOne({symbol: symbol}, function(err, doc) {
 					if (err) console.log(err);
 
-					if (doc) res.redirect('/')
+					if (doc) res.send({})
 
 					else {
 						var newCompany = new Company()
@@ -60,6 +71,10 @@ module.exports = function(app, io) {
 						newCompany.id = body.dataset.id
 						newCompany.symbol = body.dataset.dataset_code
 						newCompany.name = body.dataset.name.split('Prices')[0]
+						for (var i = 0; i < body.dataset.data.length; i++) {
+							newCompany.stocks.push([body.dataset.data[i][0], body.dataset.data[i][1]])
+ 						}
+
 						var temp = newCompany.name
 						newCompany.save(function(err, doc) {
 							if (err) console.log(err);

@@ -51,7 +51,8 @@ function makeChart(names) {
         $.getJSON('/api/stocks/' + name, function (data) {
  
             var newData = []
-            var tempData = data.dataset.data.reverse()
+            console.log(Array.isArray(data.stocks));
+            var tempData = data.stocks.reverse()
             tempData.forEach(function(arr) {
                 var temp = new Date(arr[0])
                 newData.push([temp.getTime(), arr[1]])
