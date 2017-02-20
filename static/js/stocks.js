@@ -11,7 +11,6 @@ $(function() {
         socket.emit('remove symbol', element)
         $('div.' + element).parent().remove()
         names = getNames()
-        console.log('names ' + names);
         makeChart(names)
     })
 
@@ -23,25 +22,23 @@ $(function() {
                 symbol: $('#input-symbol').val()
             },
             success: function(data) {
-                console.log(data);
-                var names = getNames()
-                makeChart(names)
+                $('#input-symbol').val('')
             }
         })
+        return false
     })
 
     socket.on('add symbol', function(data) {
-        console.log('got emit from server');
         var symbol = data.symbol
         var name = data.name
         $('#add').before('<div class="col-sm-6 col-md-4"><div class="thumbnail ' + symbol + '"><div class="caption"><h3>' + symbol + '</h3><p>' + name + '</p><p><a href="#" id="' + symbol + '" class="btn btn-danger remove" role="button">Remove</a></p></div></div></div>')
-        names = getNames()
+        var names = getNames()
         makeChart(names)
     })
 
     socket.on('remove symbol', function(symbol) {
         $('div.' + symbol).parent().remove()
-        names = getNames()
+        var names = getNames()
         makeChart(names)
     })
 })
@@ -52,8 +49,6 @@ function makeChart(names) {
 
     $.each(names, function (i, name) {
         $.getJSON('/api/stocks/' + name, function (data) {
-
-            console.log(typeof data);
 
             var newData = []
             var tempData = data.dataset.data.reverse()
