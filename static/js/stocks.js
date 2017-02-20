@@ -16,7 +16,18 @@ $(function() {
     })
 
     $('form').submit(function() {
-
+        $.ajax({
+            url: '/',
+            type: 'POST',
+            data: {
+                symbol: $('#input-symbol').val()
+            },
+            success: function(data) {
+                console.log(data);
+                var names = getNames()
+                makeChart(names)
+            }
+        })
     })
 
     socket.on('add symbol', function(data) {

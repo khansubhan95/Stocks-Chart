@@ -24,16 +24,15 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'app/views'))
 
 io.on('connection', function(socket){
+	routes(app, io, socket)
 	console.log('a user connected');
 	socket.on('remove symbol', function(symbol) {
 		Company.remove({'symbol': symbol}, function(err, doc) {
 			if (err) console.log(err);
-			io.emit('remove symbol', symbol)
+			socket.broadcast.emit('remove symbol', symbol)
 		})
 	})
 });
-
-routes(app, io)
 
 server.listen(process.env.PORT||3000)
 

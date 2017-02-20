@@ -8,7 +8,7 @@ var Company = mongoose.model('Company', companySchema)
 
 var urlencodedParser = bodyParser.urlencoded({extended:false})
 
-module.exports = function(app, io) {
+module.exports = function(app, io, socket) {
 	app.get('/', function(req, res) {
 		Company.find({}, function(err, doc) {
 			if (err) console.log(err);
@@ -63,9 +63,9 @@ module.exports = function(app, io) {
 						var temp = newCompany.name
 						newCompany.save(function(err, doc) {
 							if (err) console.log(err);
-							io.emit('add symbol', {'symbol': symbol, 'name': temp})
+							socket.broadcast.emit('add symbol', {'symbol': symbol, 'name': temp})
 							console.log('server emitted');
-							res.redirect('/')
+							res.json({})
 						})
 					}
 				})
