@@ -15,14 +15,18 @@ $(function() {
     })
 
     $('form').submit(function() {
+        var symbol = $('#input-symbol').val()
+        $('#input-symbol').val('')
+        $('#loading').html('Loading')
         $.ajax({
             url: '/',
             type: 'POST',
             data: {
-                symbol: $('#input-symbol').val()
+                symbol: symbol
             },
             success: function(data) {
-                $('#input-symbol').val('')
+                // $('#input-symbol').val('')
+                $('#loading').html('')
             }
         })
         return false
