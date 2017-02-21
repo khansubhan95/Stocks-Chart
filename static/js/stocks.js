@@ -14,7 +14,8 @@ $(function() {
         makeChart(names)
     })
 
-    $('form').submit(function() {
+    $('form').submit(function(event) {
+        event.preventDefault()
         var symbol = $('#input-symbol').val()
         $('#input-symbol').val('')
         $('#loading').html('Loading')
@@ -29,7 +30,7 @@ $(function() {
                 $('#loading').html('')
             }
         })
-        return false
+        // return false
     })
 
     socket.on('add symbol', function(data) {
