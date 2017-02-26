@@ -1,4 +1,4 @@
-#Nightlife Coordination
+#Chart Stock Data
 
 A web application that displays stock prices of companies in chart form. The application syncs in real time across clients, i.e. what one client adds or removes is reflected in the other clients browser, without need of refreshing the browser. This is accomplished by using WebSockets. Libraries and APIs used include socket.io (for WebSocket), Quandl API (for getting stock prices) and Highstock API (for displaying charts of stock prices) 
 
