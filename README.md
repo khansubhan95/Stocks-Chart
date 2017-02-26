@@ -33,10 +33,10 @@ Sign up on Quandl and insert into .env the generated API key
 The project uses MongoDB to store data so make sure you have it installed. Use the MONGO_URI to access a DB from the app.
 
 ##Deployment
-This application was deployed on gomix. To deploy, create a GitHub repository, push the project to the repo. Create a new gomix application, and import the repo into it by going to project_name > Advanced Options > Import from GitHub . Do this process everytime, you change your repo.
+This application was deployed on gomix. To deploy, create a GitHub repository, push the project to the repo. Create a new gomix application, and import the repo into it by going to project_name > Advanced Options > Import from GitHub . Do this process everytime, you change your repo. Copy contents of .env to env.
 
 **MONGO_URI**
-
+Use a third party service like [mLab](https://mlab.com/) to make a MongoDB database and note down the access point. Insert this URI into the mongo variable in .env
 
 ##Builtwith
 1. [socket.io](http://socket.io)      
