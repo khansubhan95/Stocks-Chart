@@ -55,7 +55,7 @@ module.exports = function(app, io) {
 		
 		var dateRaw = new Date()
 	    var date = (dateRaw.getUTCFullYear()-1).toString() + '-' + dateFormat(dateRaw.getMonth()+1) + '-' + dateFormat(dateRaw.getMonth())
-	    var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?column_index=1&start_date=' + date + '&api_key=JaJF5_8_KE2R6XNom8ux'
+	    var APIEndPoint = 'https://www.quandl.com/api/v3/datasets/WIKI/' + symbol.toString() + '.json?column_index=1&start_date=' + date + '&api_key=' + process.env.QUANDL_KEY
 
 		request.get(APIEndPoint, function(err, response, body) {
 			if (!err && response.statusCode===200) {
