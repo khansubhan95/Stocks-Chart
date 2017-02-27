@@ -89,6 +89,12 @@ module.exports = function(app, io) {
 		})
 		
 	})
+
+	app.use(function(req, res, next) {
+		if (req.accepts('html')) {
+			res.render('404', { url: req.url });
+		}
+	})
 }
 
 function dateFormat(num) {
