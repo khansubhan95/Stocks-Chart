@@ -24,40 +24,9 @@
 	<script type="text/javascript" src="/js/stocks.js"></script>
 </head>
 <body>
-
-	<div id="container" style="height: 400px; min-width: 310px"></div>
-
-	<br>
-
-	<form method="POST" action="" class="form-inline">
-		<input id="input-symbol" type="text" class="form-control" name="symbol" required="true" placeholder="enter company symbol">
-
-		<button type="submit" class="btn btn-default">Submit</button>
-	</form>
-
-	<br>
-
-	<iframe src="https://ghbtns.com/github-btn.html?user=khansubhan95&repo=chart-stock&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-
-	<div id="loading"></div>
-
-	<br>
-
 	<div class="row">
-	<% data.forEach(function(obj){ %>
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail <%= obj.symbol %>">
-				<div class="caption">
-					<h3><%= obj.symbol %></h3>
-					<p><%= obj.name %></p>
-					<p>
-			        	<a href="#" id="<%= obj.symbol %>" class="btn btn-danger remove" role="button">Remove</a>
-					</p>
-				</div>
-			</div>
-		</div>	
-	<% }) %>
-	<div id="add"></div>
+		<h4>Looks like the link you want does not exist</h4>
+		<h4><a href="/">Home</a></h4>
 	</div>
 </body>
 </html>
